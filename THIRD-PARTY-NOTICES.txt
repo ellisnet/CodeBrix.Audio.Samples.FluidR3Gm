@@ -1,0 +1,121 @@
+THIRD-PARTY SOFTWARE NOTICES AND INFORMATION
+
+CodeBrix.Audio.Samples.FluidR3Gm offers the FluidR3_GM General MIDI SoundFont
+to CodeBrix.Audio as a named instrument library. The library's own source code
+is written by the CodeBrix project and incorporates no third-party source code.
+
+The SOUND CONTENT this package redistributes - the SoundFont file itself - is
+third-party work and is covered in full below. It is redistributed under the
+MIT licence, on the terms its author set out.
+
+Jeremy Ellis and contributors license the CodeBrix.Audio.Samples.FluidR3Gm
+project to you under the terms set forth in the LICENSE file, which is located
+at the root of this repository.
+
+If you have any questions about any third-party code or content referenced
+here, or if you believe that any third-party code has been included in
+CodeBrix.Audio.Samples.FluidR3Gm in error, please open a new issue at:
+https://github.com/ellisnet/CodeBrix.Audio.Samples.FluidR3Gm/issues
+
+================================================================================
+
+1. Fluid (R3) SoundFont - FluidR3_GM.sf2
+
+   Author and copyright holder:  Frank Wen
+   Copyright (c) 2000-2002, 2008 Frank Wen <getfrank@gmail.com>
+   Licence:                      MIT
+
+   Source of record: the upstream source archive
+   fluid-soundfont_3.1.orig.tar.gz, fetched from the Debian archive at
+   https://deb.debian.org/debian/pool/main/f/fluid-soundfont/
+   The exact address, the archive's byte count and sha256, everything the
+   archive holds, and the byte count and sha256 of each file taken out of it
+   are recorded in ASSET-PROVENANCE.json at the root of this repository, which
+   the repository's own staging tool writes.
+
+   WHAT IS REDISTRIBUTED. One file of that archive is redistributed in the
+   CodeBrix.Audio.Samples.FluidR3Gm.MitLicenseForever NuGet package:
+   FluidR3_GM.sf2, unmodified, byte for byte as the archive holds it. The
+   author's COPYING and README files travel with it, under the names
+   LICENSE-FluidR3_GM.txt and README-FluidR3_GM.txt, and are placed beside the
+   SoundFont in the output folder of every project that references the package.
+   No other file from the archive is redistributed, and the SoundFont is not
+   converted, trimmed, re-mapped or re-encoded in any way.
+
+   NOTHING FROM THIS UPSTREAM IS COMPILED INTO THE ASSEMBLY. The library reads
+   the SoundFont at run time through CodeBrix.Audio; no source code, and no
+   part of the sound content, is embedded in CodeBrix.Audio.Samples.FluidR3Gm.
+
+   --------------------------------------------------------------------------
+   The author's release statement, reproduced verbatim from the README file
+   carried in the upstream source archive:
+   --------------------------------------------------------------------------
+
+Fluid (R3) SoundFont
+
+Copyright (c) 2000-2002, 2008 Frank Wen <getfrank@gmail.com>
+
+I hereby release Fluid under the MIT license, as described in COPYING.
+
+
+Thanks to Toby Smithe for helping to get Fluid included in Ubuntu.
+
+This package, of course, is the original Release 3 of Fluid.  
+
+
+Fluid was constructed in part from samples found in the public domain that I
+edited/cleaned/remixed/programmed and largely from recordings of my own and
+in conjunction with the people below who helped along the way:
+
+Suren M. Seron
+Scott Hanan
+Steve Aupperle
+Chris Gillman
+Alex Taubr
+Chris Prola
+Andrew Klenk
+Winfried Hubbe 
+Dylan
+Tim
+Gort
+Uros Katic 
+Ethan Winer (http://www.ethanwiner.com) 
+
+
+It's obviously been a few years since the project, but its nice to see that
+people are still enjoying my work and getting good use out of it.  As always,
+I'd like to hear some work done with Fluid so email me, or just email me to
+say hello and tell me what is going on in the computer musician world.
+Who knows, maybe I'll kick start this project again? ;)
+
+   --------------------------------------------------------------------------
+   The licence, reproduced verbatim from the COPYING file carried in the
+   upstream source archive:
+   --------------------------------------------------------------------------
+
+Copyright (c) 2000-2002, 2008 Frank Wen <getfrank@gmail.com>
+
+Permission is hereby granted, free of charge, to any person
+obtaining a copy of this software and associated documentation
+files (the "Software"), to deal in the Software without
+restriction, including without limitation the rights to use,
+copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the
+Software is furnished to do so, subject to the following
+conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES
+OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT
+HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR
+OTHER DEALINGS IN THE SOFTWARE.
+
+================================================================================
+
+END OF THIRD-PARTY SOFTWARE NOTICES AND INFORMATION

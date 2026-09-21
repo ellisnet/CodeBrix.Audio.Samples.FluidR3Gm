@@ -427,3 +427,9 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Asset staging (tools/AssetStager). Everything the stager downloads and extracts stays inside the
+# repository and out of git; only staging/README.txt is checked in. The soundfont is 141 MiB, which is
+# past what a git host will take, and the stager reproduces it exactly from the recorded source.
+staging/download/
+staging/output/

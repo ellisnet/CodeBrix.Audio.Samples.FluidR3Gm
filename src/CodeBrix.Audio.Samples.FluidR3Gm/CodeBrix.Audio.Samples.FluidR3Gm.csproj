@@ -1,0 +1,137 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <AssemblyName>CodeBrix.Audio.Samples.FluidR3Gm</AssemblyName>
+    <RootNamespace>CodeBrix.Audio.Samples.FluidR3Gm</RootNamespace>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <!--
+    Package / assembly version: date-stamped and auto-incrementing.
+
+    Format:  1.<x>.<y>.<z>   (every field is derived from UTC "now")
+
+      1  (major)     Always 1 for this library.
+      x  (minor)     Whole years since $(_VersionBaseYear).
+                     With base 2026: 2026=0, 2027=1, 2028=2, ...
+      y  (build)     Day of year, 1-based inclusive, UTC.
+                     Jan 1 = 1, Feb 1 = 32, Dec 31 = 365 (366 in a leap year).
+      z  (revision)  Minute of day, UTC, range 0 to 1439.
+                     00:00 = 0, 23:59 = 1439.
+
+    The version is always strictly increasing over time:
+      * within a day, z grows;
+      * at a day boundary, y increments and outranks z resetting to 0;
+      * at a (UTC) year boundary, x increments and outranks y and z resetting.
+
+    Notes / caveats:
+      * All fields read from System.DateTime.UtcNow, so a local dev build and a
+        UTC CI build agree on the value. Math.Floor on the minutes keeps z in
+        0..1439 (plain rounding could land on 1440 late in the day).
+      * Because the value depends on the clock, every build produces a NEW
+        version. With GeneratePackageOnBuild=true that means a fresh .nupkg on
+        each build, and two builds in the SAME UTC minute produce the SAME
+        version (so do not publish two packages from within one minute).
+      * This is date-stamp versioning, not SemVer: minor encodes the year and
+        major is pinned to 1, so major/minor do not signal API compatibility.
+      * To re-baseline the minor number, change _VersionBaseYear below.
+  -->
+  <PropertyGroup>
+    <_VersionBaseYear>2026</_VersionBaseYear>
+    <_VersionYears>$([MSBuild]::Subtract($([System.DateTime]::UtcNow.Year), $(_VersionBaseYear)))</_VersionYears>
+    <_VersionDayOfYear>$([System.DateTime]::UtcNow.DayOfYear)</_VersionDayOfYear>
+    <_VersionMinuteOfDay>$([System.Convert]::ToInt32($([System.Math]::Floor($([System.DateTime]::UtcNow.TimeOfDay.TotalMinutes)))))</_VersionMinuteOfDay>
+    <BuildVersion>1.$(_VersionYears).$(_VersionDayOfYear).$(_VersionMinuteOfDay)</BuildVersion>
+    <Version>$(BuildVersion)</Version>
+    <AssemblyVersion>$(BuildVersion)</AssemblyVersion>
+    <FileVersion>$(BuildVersion)</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>CodeBrix.Audio.Samples.FluidR3Gm.MitLicenseForever</PackageId>
+    <Product>CodeBrix.Audio.Samples.FluidR3Gm</Product>
+    <Title>CodeBrix.Audio.Samples.FluidR3Gm</Title>
+    <Authors>Jeremy Ellis</Authors>
+    <Description>A recorded General MIDI instrument library for CodeBrix.Audio. The package carries the FluidR3_GM SoundFont and registers it under the name "FluidR3Gm", so an application that already plays MIDI swaps its entire sound for recorded instruments in one line. Every General MIDI program and the percussion kit are covered, one SoundFont is shared by every part of an arrangement, and the file is loaded lazily on first use.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/ellisnet/CodeBrix.Audio.Samples.FluidR3Gm</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ellisnet/CodeBrix.Audio.Samples.FluidR3Gm</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageIcon>icon-codebrix-128.png</PackageIcon>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <Copyright>Copyright (c) 2026 Jeremy Ellis and contributors</Copyright>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <IsPackable>true</IsPackable>
+    <PackageTags>audio;midi;soundfont;instruments;general-midi;samples;CodeBrix</PackageTags>
+  </PropertyGroup>
+
+  <!--
+    THE ONLY DEPENDENCY, and it stays the only one: this package implements an interface that
+    CodeBrix.Audio owns and adds nothing else. It never references anything named .MusicGeneration,
+    and it does not need CodeBrix.Audio.ModestSynth - the two instrument libraries are alternatives
+    to each other, not layers.
+  -->
+  <ItemGroup>
+    <PackageReference Include="CodeBrix.Audio.MitLicenseForever" Version="1.0.264.61" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\..\icon-codebrix-128.png" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+    <None Include="..\..\AGENT-README.txt" Pack="true" PackagePath="" />
+    <None Include="..\..\THIRD-PARTY-NOTICES.txt" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <!--
+    THE STAGED ASSET. The SoundFont is not in git - it is far past what a git host will take - so the
+    pack step reads it out of staging/output, where tools/AssetStager puts it. The licence and README
+    text that upstream ships beside it travel with it into the package and, through the targets file
+    below, into every consumer's output folder.
+  -->
+  <PropertyGroup>
+    <FluidR3GmStagingDirectory>$(MSBuildThisFileDirectory)..\..\staging\output\</FluidR3GmStagingDirectory>
+    <FluidR3GmSoundFontFileName>FluidR3_GM.sf2</FluidR3GmSoundFontFileName>
+    <FluidR3GmLicenseFileName>LICENSE-FluidR3_GM.txt</FluidR3GmLicenseFileName>
+    <FluidR3GmReadmeFileName>README-FluidR3_GM.txt</FluidR3GmReadmeFileName>
+    <FluidR3GmStagedSoundFont>$(FluidR3GmStagingDirectory)$(FluidR3GmSoundFontFileName)</FluidR3GmStagedSoundFont>
+    <FluidR3GmStagedLicense>$(FluidR3GmStagingDirectory)$(FluidR3GmLicenseFileName)</FluidR3GmStagedLicense>
+    <FluidR3GmStagedReadme>$(FluidR3GmStagingDirectory)$(FluidR3GmReadmeFileName)</FluidR3GmStagedReadme>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="$(FluidR3GmStagedSoundFont)"
+          Condition="Exists('$(FluidR3GmStagedSoundFont)')"
+          Pack="true"
+          PackagePath="assets/"
+          Visible="false" />
+    <None Include="$(FluidR3GmStagedLicense)"
+          Condition="Exists('$(FluidR3GmStagedLicense)')"
+          Pack="true"
+          PackagePath="assets/"
+          Visible="false" />
+    <None Include="$(FluidR3GmStagedReadme)"
+          Condition="Exists('$(FluidR3GmStagedReadme)')"
+          Pack="true"
+          PackagePath="assets/"
+          Visible="false" />
+    <None Include="buildTransitive\**\*" Pack="true" PackagePath="buildTransitive/" />
+  </ItemGroup>
+
+  <!--
+    THE PACK GUARD. A package with nothing in it can never be built: packing without the staged
+    SoundFont would produce a CodeBrix.Audio.Samples.FluidR3Gm package that ships no samples, which
+    is worse than no package at all because it would install and then fail at run time. Run this
+    target by name to check the staging folder without building anything:
+
+        dotnet msbuild src/CodeBrix.Audio.Samples.FluidR3Gm -t:CheckFluidR3GmStagedAsset
+  -->
+  <Target Name="CheckFluidR3GmStagedAsset" BeforeTargets="GenerateNuspec">
+    <Error Condition="!Exists('$(FluidR3GmStagedSoundFont)')"
+           Text="The SoundFont this package exists to ship has not been staged: there is no $(FluidR3GmSoundFontFileName) in staging/output. It is deliberately not in git - it is larger than a git host will accept - so it is reproduced from its recorded upstream source by the asset stager in this repository. Run it from the repository root and then build again:%0A%0A    dotnet run --project tools/AssetStager -c Release%0A%0ASee staging/README.txt for what the stager does and what it costs." />
+    <Error Condition="!Exists('$(FluidR3GmStagedLicense)') Or !Exists('$(FluidR3GmStagedReadme)')"
+           Text="The upstream licence text has not been staged: staging/output is missing $(FluidR3GmLicenseFileName) or $(FluidR3GmReadmeFileName). The SoundFont may not be redistributed without the notice that travels with it, so this package is not built without it. Run the asset stager from the repository root and then build again:%0A%0A    dotnet run --project tools/AssetStager -c Release" />
+  </Target>
+
+</Project>

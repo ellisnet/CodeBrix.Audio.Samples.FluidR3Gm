@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>AssetStager</AssemblyName>
+    <RootNamespace>CodeBrix.Audio.Samples.FluidR3Gm.AssetStager</RootNamespace>
+    <Description>Reproduces this repository's shipped soundfont asset from upstream, on a machine that has nothing but .NET installed.</Description>
+  </PropertyGroup>
+
+  <!--
+    NO PACKAGE REFERENCES AT ALL, deliberately. Everything this tool needs is in the framework:
+    HttpClient downloads the tarball, GZipStream decompresses it and System.Formats.Tar reads it.
+    A staging tool that pulled a third-party package in would make reproducing the asset depend on
+    that package still being there years from now.
+  -->
+
+</Project>

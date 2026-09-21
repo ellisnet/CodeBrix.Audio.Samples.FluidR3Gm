@@ -1,0 +1,76 @@
+{
+  "schema": "codebrix.asset-provenance/1",
+  "stagedAtUtc": "2026-09-21T00:50:35.9453756Z",
+  "upstream": {
+    "name": "FluidR3_GM",
+    "address": "https://deb.debian.org/debian/pool/main/f/fluid-soundfont/fluid-soundfont_3.1.orig.tar.gz",
+    "licenseId": "MIT",
+    "licenseSource": "the COPYING file carried in this archive, which holds the MIT licence text, and the README beside it, in which the author releases the work under that licence; both are extracted into the output folder with the soundfont",
+    "archive": {
+      "name": "fluid-soundfont_3.1.orig.tar.gz",
+      "bytes": 134835922,
+      "sha256": "2621acaa1c78e4abdb24bdd163230cc577e61276936d6aa6e3180582142f0343"
+    },
+    "archiveContents": [
+      {
+        "path": "fluid-soundfont-3.1/",
+        "entryType": "Directory",
+        "bytes": 0,
+        "extractedAs": null
+      },
+      {
+        "path": "fluid-soundfont-3.1/FluidR3_GM.sf2",
+        "entryType": "RegularFile",
+        "bytes": 148398306,
+        "extractedAs": "FluidR3_GM.sf2"
+      },
+      {
+        "path": "fluid-soundfont-3.1/FluidR3_GS.sf2",
+        "entryType": "RegularFile",
+        "bytes": 3201926,
+        "extractedAs": null
+      },
+      {
+        "path": "fluid-soundfont-3.1/COPYING",
+        "entryType": "RegularFile",
+        "bytes": 1086,
+        "extractedAs": "LICENSE-FluidR3_GM.txt"
+      },
+      {
+        "path": "fluid-soundfont-3.1/README",
+        "entryType": "RegularFile",
+        "bytes": 1042,
+        "extractedAs": "README-FluidR3_GM.txt"
+      }
+    ]
+  },
+  "artifact": {
+    "folder": "staging/output",
+    "files": [
+      {
+        "name": "FluidR3_GM.sf2",
+        "bytes": 148398306,
+        "sha256": "74594e8f4250680adf590507a306655a299935343583256f3b722c48a1bc1cb0"
+      },
+      {
+        "name": "LICENSE-FluidR3_GM.txt",
+        "bytes": 1086,
+        "sha256": "8ef830b65c97a976b86e34bb5fde08d99dfb1db13c4149b5b20bc837ac6c4568"
+      },
+      {
+        "name": "README-FluidR3_GM.txt",
+        "bytes": 1042,
+        "sha256": "2f92d462684629f207e43815115b79d7f1ce130d30ca8792b7d82b398a8306f9"
+      }
+    ],
+    "totalBytes": 148400434
+  },
+  "stagedOn": {
+    "operatingSystem": "LMDE 7 (gigi)",
+    "runtimeIdentifier": "linux-x64",
+    "processArchitecture": "X64",
+    "processor": "12th Gen Intel(R) Core(TM) i7-12850HX",
+    "processorCount": 24,
+    "framework": ".NET 10.0.12"
+  }
+}

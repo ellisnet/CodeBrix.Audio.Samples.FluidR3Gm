@@ -1,0 +1,75 @@
+<Project>
+
+  <!--
+    Puts the FluidR3_GM SoundFont, and the upstream licence text that must travel with it, into the
+    output folder of every project that reaches this package - INCLUDING an executable that reaches
+    it only through a library of its own.
+
+    WHY THIS FILE EXISTS RATHER THAN contentFiles/ OR build/. NuGet treats `contentFiles` and
+    `build` as private assets: they reach the project that names the PackageReference and stop
+    there. An application is usually a head project over a shared library, and the head is exactly
+    the project that needs the SoundFont beside its executable - so the assets are landed from
+    `buildTransitive`, which flows all the way down the reference chain.
+
+    THIS IS PLAIN MSBuild. A consumer does not have to be any particular kind of application: a
+    console project, a test project, a class library and a UI head all behave the same way.
+
+    TWO PROPERTIES A CONSUMER MAY SET, before this file is imported (in Directory.Build.props, or in
+    the project file above its PackageReference):
+
+      CodeBrixFluidR3GmCopyAssetsToOutput   false leaves the assets in the package and copies
+                                            nothing. Set it when the application ships the SoundFont
+                                            some other way - a shared assets folder, a downloader of
+                                            its own, an installer - and tell the library where the
+                                            file is with FluidR3GmInstrumentLibrary.UseSoundFontAt.
+                                            The SoundFont is a large file, and an application made of
+                                            several projects otherwise keeps a copy per project.
+
+      CodeBrixFluidR3GmAssetsDirectory      where to copy the assets FROM. It defaults to this
+                                            package's own assets folder and is here for a build that
+                                            relocates package content.
+  -->
+
+  <PropertyGroup>
+    <CodeBrixFluidR3GmCopyAssetsToOutput Condition="'$(CodeBrixFluidR3GmCopyAssetsToOutput)' == ''">true</CodeBrixFluidR3GmCopyAssetsToOutput>
+    <CodeBrixFluidR3GmAssetsDirectory Condition="'$(CodeBrixFluidR3GmAssetsDirectory)' == ''">$([MSBuild]::NormalizeDirectory('$(MSBuildThisFileDirectory)', '..', '..', 'assets'))</CodeBrixFluidR3GmAssetsDirectory>
+  </PropertyGroup>
+
+  <ItemGroup Condition="'$(CodeBrixFluidR3GmCopyAssetsToOutput)' == 'true'">
+
+    <!--
+      The SoundFont lands beside the assembly under its own name, which is where
+      FluidR3GmInstrumentLibrary looks for it by default. PreserveNewest keeps a rebuild from
+      copying a large file it has already copied.
+    -->
+    <None Include="$(CodeBrixFluidR3GmAssetsDirectory)FluidR3_GM.sf2"
+          Condition="Exists('$(CodeBrixFluidR3GmAssetsDirectory)FluidR3_GM.sf2')">
+      <Link>FluidR3_GM.sf2</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>false</Pack>
+      <Visible>false</Visible>
+    </None>
+
+    <!--
+      The licence and the author's own release notice travel with the samples wherever they go. They
+      are two small text files; nothing is saved by leaving them behind.
+    -->
+    <None Include="$(CodeBrixFluidR3GmAssetsDirectory)LICENSE-FluidR3_GM.txt"
+          Condition="Exists('$(CodeBrixFluidR3GmAssetsDirectory)LICENSE-FluidR3_GM.txt')">
+      <Link>LICENSE-FluidR3_GM.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>false</Pack>
+      <Visible>false</Visible>
+    </None>
+
+    <None Include="$(CodeBrixFluidR3GmAssetsDirectory)README-FluidR3_GM.txt"
+          Condition="Exists('$(CodeBrixFluidR3GmAssetsDirectory)README-FluidR3_GM.txt')">
+      <Link>README-FluidR3_GM.txt</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <Pack>false</Pack>
+      <Visible>false</Visible>
+    </None>
+
+  </ItemGroup>
+
+</Project>

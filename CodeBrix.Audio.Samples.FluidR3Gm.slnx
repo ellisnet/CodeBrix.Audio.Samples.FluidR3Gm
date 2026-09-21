@@ -1,0 +1,23 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".gitignore" />
+    <File Path="AGENT-README.txt" />
+    <File Path="ASSET-PROVENANCE.json" />
+    <File Path="EXTRAS-README.txt" />
+    <File Path="global.json" />
+    <File Path="icon-codebrix-128.png" />
+    <File Path="LICENSE" />
+    <File Path="MAINTAINER-README.txt" />
+    <File Path="README-INDEX.txt" />
+    <File Path="README.md" />
+    <File Path="staging/README.txt" />
+    <File Path="THIRD-PARTY-NOTICES.txt" />
+  </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="tests/CodeBrix.Audio.Samples.FluidR3Gm.Tests/CodeBrix.Audio.Samples.FluidR3Gm.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Tools/">
+    <Project Path="tools/AssetStager/AssetStager.csproj" />
+  </Folder>
+  <Project Path="src/CodeBrix.Audio.Samples.FluidR3Gm/CodeBrix.Audio.Samples.FluidR3Gm.csproj" />
+</Solution>
