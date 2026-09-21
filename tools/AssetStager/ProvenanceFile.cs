@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Runtime.InteropServices;
+using System.Runtime.Versioning;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Text.Json;
+using Microsoft.Win32;
 
 namespace CodeBrix.Audio.Samples.FluidR3Gm.AssetStager;
 
@@ -163,11 +166,23 @@ internal static class ProvenanceFile
     }
 
     /// <summary>
-    /// The processor's own name, read from where the operating system publishes it.
+    /// The processor's own name, read from where the operating system publishes it: /proc/cpuinfo on
+    /// Linux, the registry on Windows, the kernel's brand string on macOS. Each operating system has its
+    /// own branch, and the Linux one is reached on every platform that is neither of the other two.
     /// </summary>
     /// <returns>The name, or <see langword="null"/> when this platform does not publish one.</returns>
     private static string ProcessorName()
     {
+        if (OperatingSystem.IsWindows())
+        {
+            return WindowsProcessorName();
+        }
+
+        if (OperatingSystem.IsMacOS())
+        {
+            return MacProcessorName();
+        }
+
         const string CpuInfo = "/proc/cpuinfo";
         if (!File.Exists(CpuInfo))
         {
@@ -199,4 +214,89 @@ internal static class ProvenanceFile
 
         return null;
     }
+
+    /// <summary>
+    /// The processor's name on Windows, which has no /proc/cpuinfo: the registry's own description of the
+    /// first processor ("12th Gen Intel(R) Core(TM) ..."), or the PROCESSOR_IDENTIFIER environment variable
+    /// ("Intel64 Family 6 Model ...") when the registry cannot be read.
+    /// </summary>
+    /// <returns>The name, or <see langword="null"/> when Windows publishes neither.</returns>
+    [SupportedOSPlatform("windows")]
+    private static string WindowsProcessorName()
+    {
+        const string ProcessorKey = @"HARDWARE\DESCRIPTION\System\CentralProcessor\0";
+
+        try
+        {
+            using (RegistryKey key = Registry.LocalMachine.OpenSubKey(ProcessorKey))
+            {
+                if (key != null)
+                {
+                    string name = key.GetValue("ProcessorNameString") as string;
+                    if (!string.IsNullOrWhiteSpace(name))
+                    {
+                        return name.Trim();
+                    }
+                }
+            }
+        }
+        catch (IOException)
+        {
+        }
+        catch (UnauthorizedAccessException)
+        {
+        }
+        catch (System.Security.SecurityException)
+        {
+        }
+
+        string identifier = Environment.GetEnvironmentVariable("PROCESSOR_IDENTIFIER");
+        return string.IsNullOrWhiteSpace(identifier) ? null : identifier.Trim();
+    }
+
+    /// <summary>
+    /// The processor's name on macOS, which has no /proc/cpuinfo: the kernel's own brand string
+    /// ("Apple M2 Pro", "Intel(R) Core(TM) i9-..."), asked for the way the sysctl command asks.
+    /// </summary>
+    /// <returns>The name, or <see langword="null"/> when the kernel does not publish one.</returns>
+    [SupportedOSPlatform("macos")]
+    private static string MacProcessorName()
+    {
+        const string BrandString = "machdep.cpu.brand_string";
+
+        try
+        {
+            //Asked twice, as the call is meant to be: once for the length, once for the text.
+            nuint length = 0;
+            if (SysctlByName(BrandString, null, ref length, IntPtr.Zero, 0) != 0 || length == 0)
+            {
+                return null;
+            }
+
+            byte[] buffer = new byte[(int)length];
+            if (SysctlByName(BrandString, buffer, ref length, IntPtr.Zero, 0) != 0)
+            {
+                return null;
+            }
+
+            string name = Encoding.UTF8.GetString(buffer, 0, (int)length).TrimEnd('\0').Trim();
+            return name.Length == 0 ? null : name;
+        }
+        catch (DllNotFoundException)
+        {
+        }
+        catch (EntryPointNotFoundException)
+        {
+        }
+
+        return null;
+    }
+
+    [DllImport("libc", EntryPoint = "sysctlbyname")]
+    private static extern int SysctlByName(
+        [MarshalAs(UnmanagedType.LPStr)] string name,
+        byte[] oldValue,
+        ref nuint oldLength,
+        IntPtr newValue,
+        nuint newLength);
 }
