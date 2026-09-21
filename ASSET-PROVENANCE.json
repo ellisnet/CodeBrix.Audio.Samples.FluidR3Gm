@@ -69,7 +69,7 @@
     "operatingSystem": "Microsoft Windows 10.0.26200",
     "runtimeIdentifier": "win-x64",
     "processArchitecture": "X64",
-    "processor": null,
+    "processor": "12th Gen Intel(R) Core(TM) i7-12850HX",
     "processorCount": 24,
     "framework": ".NET 10.0.12"
   }
