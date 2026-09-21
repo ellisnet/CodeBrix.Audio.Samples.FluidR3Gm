@@ -74,7 +74,7 @@
     to each other, not layers.
   -->
   <ItemGroup>
-    <PackageReference Include="CodeBrix.Audio.MitLicenseForever" Version="1.0.264.61" />
+    <PackageReference Include="CodeBrix.Audio.MitLicenseForever" Version="1.0.264.1197" />
   </ItemGroup>
 
   <ItemGroup>
@@ -101,21 +101,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="$(FluidR3GmStagedSoundFont)"
-          Condition="Exists('$(FluidR3GmStagedSoundFont)')"
-          Pack="true"
-          PackagePath="assets/"
-          Visible="false" />
-    <None Include="$(FluidR3GmStagedLicense)"
-          Condition="Exists('$(FluidR3GmStagedLicense)')"
-          Pack="true"
-          PackagePath="assets/"
-          Visible="false" />
-    <None Include="$(FluidR3GmStagedReadme)"
-          Condition="Exists('$(FluidR3GmStagedReadme)')"
-          Pack="true"
-          PackagePath="assets/"
-          Visible="false" />
+    <None Include="$(FluidR3GmStagedSoundFont)" Condition="Exists('$(FluidR3GmStagedSoundFont)')" Pack="true" PackagePath="assets/" Visible="false" />
+    <None Include="$(FluidR3GmStagedLicense)" Condition="Exists('$(FluidR3GmStagedLicense)')" Pack="true" PackagePath="assets/" Visible="false" />
+    <None Include="$(FluidR3GmStagedReadme)" Condition="Exists('$(FluidR3GmStagedReadme)')" Pack="true" PackagePath="assets/" Visible="false" />
     <None Include="buildTransitive\**\*" Pack="true" PackagePath="buildTransitive/" />
   </ItemGroup>
 
@@ -128,10 +116,8 @@
         dotnet msbuild src/CodeBrix.Audio.Samples.FluidR3Gm -t:CheckFluidR3GmStagedAsset
   -->
   <Target Name="CheckFluidR3GmStagedAsset" BeforeTargets="GenerateNuspec">
-    <Error Condition="!Exists('$(FluidR3GmStagedSoundFont)')"
-           Text="The SoundFont this package exists to ship has not been staged: there is no $(FluidR3GmSoundFontFileName) in staging/output. It is deliberately not in git - it is larger than a git host will accept - so it is reproduced from its recorded upstream source by the asset stager in this repository. Run it from the repository root and then build again:%0A%0A    dotnet run --project tools/AssetStager -c Release%0A%0ASee staging/README.txt for what the stager does and what it costs." />
-    <Error Condition="!Exists('$(FluidR3GmStagedLicense)') Or !Exists('$(FluidR3GmStagedReadme)')"
-           Text="The upstream licence text has not been staged: staging/output is missing $(FluidR3GmLicenseFileName) or $(FluidR3GmReadmeFileName). The SoundFont may not be redistributed without the notice that travels with it, so this package is not built without it. Run the asset stager from the repository root and then build again:%0A%0A    dotnet run --project tools/AssetStager -c Release" />
+    <Error Condition="!Exists('$(FluidR3GmStagedSoundFont)')" Text="The SoundFont this package exists to ship has not been staged: there is no $(FluidR3GmSoundFontFileName) in staging/output. It is deliberately not in git - it is larger than a git host will accept - so it is reproduced from its recorded upstream source by the asset stager in this repository. Run it from the repository root and then build again:%0A%0A    dotnet run --project tools/AssetStager -c Release%0A%0ASee staging/README.txt for what the stager does and what it costs." />
+    <Error Condition="!Exists('$(FluidR3GmStagedLicense)') Or !Exists('$(FluidR3GmStagedReadme)')" Text="The upstream licence text has not been staged: staging/output is missing $(FluidR3GmLicenseFileName) or $(FluidR3GmReadmeFileName). The SoundFont may not be redistributed without the notice that travels with it, so this package is not built without it. Run the asset stager from the repository root and then build again:%0A%0A    dotnet run --project tools/AssetStager -c Release" />
   </Target>
 
 </Project>
