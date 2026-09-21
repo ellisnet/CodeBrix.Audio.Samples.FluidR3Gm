@@ -1,6 +1,6 @@
 {
   "schema": "codebrix.asset-provenance/1",
-  "stagedAtUtc": "2026-09-21T00:50:35.9453756Z",
+  "stagedAtUtc": "2026-09-21T01:38:48.5554479Z",
   "upstream": {
     "name": "FluidR3_GM",
     "address": "https://deb.debian.org/debian/pool/main/f/fluid-soundfont/fluid-soundfont_3.1.orig.tar.gz",
@@ -66,10 +66,10 @@
     "totalBytes": 148400434
   },
   "stagedOn": {
-    "operatingSystem": "LMDE 7 (gigi)",
-    "runtimeIdentifier": "linux-x64",
+    "operatingSystem": "Microsoft Windows 10.0.26200",
+    "runtimeIdentifier": "win-x64",
     "processArchitecture": "X64",
-    "processor": "12th Gen Intel(R) Core(TM) i7-12850HX",
+    "processor": null,
     "processorCount": 24,
     "framework": ".NET 10.0.12"
   }
