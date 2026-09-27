@@ -69,12 +69,12 @@
 
   <!--
     THE ONLY DEPENDENCY, and it stays the only one: this package implements an interface that
-    CodeBrix.Audio owns and adds nothing else. It never references anything named .MusicGeneration,
+    CodeBrix.Audio.Core owns and adds nothing else. It never references anything named .MusicGeneration,
     and it does not need CodeBrix.Audio.ModestSynth - the two instrument libraries are alternatives
     to each other, not layers.
   -->
   <ItemGroup>
-    <PackageReference Include="CodeBrix.Audio.MitLicenseForever" Version="1.0.264.1197" />
+    <PackageReference Include="CodeBrix.Audio.Core.MitLicenseForever" Version="1.0.269.1270" />
   </ItemGroup>
 
   <ItemGroup>
