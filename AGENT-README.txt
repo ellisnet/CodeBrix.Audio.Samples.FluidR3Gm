@@ -47,8 +47,14 @@ plain CodeBrix.Audio.Samples.FluidR3Gm:
     Assembly:          CodeBrix.Audio.Samples.FluidR3Gm
     Namespace:         CodeBrix.Audio.Samples.FluidR3Gm
 
-DEPENDENCIES: CodeBrix.Audio.MitLicenseForever, and nothing else. It arrives
+DEPENDENCIES: CodeBrix.Audio.Core.MitLicenseForever, and nothing else. It arrives
 automatically; the consuming project does not pin it.
+For device playback, the application also references its platform package:
+CodeBrix.Audio.MitLicenseForever on desktop, or
+CodeBrix.Audio.Android.ApacheLicenseForever on Android. Offline synthesis and
+rendering need Core only. Android applications must package the SoundFont and
+its notices as Android assets, extract them to app-private storage, and call
+UseSoundFontAt before first use; copying to a build output folder is not APK packaging.
 
 It does NOT depend on CodeBrix.Audio.ModestSynth. The synthesized General MIDI
 library and this recorded one are alternatives to each other - an application

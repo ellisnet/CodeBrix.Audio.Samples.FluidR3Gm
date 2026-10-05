@@ -45,7 +45,7 @@ interface, the registry and the generic SoundFont library that does the actual
 work; this package supplies a name, a description, where the file is, and the
 file itself.
 
-THE ONE DEPENDENCY IS CodeBrix.Audio, AND IT STAYS THE ONLY ONE. This package
+THE ONE DEPENDENCY IS CodeBrix.Audio.Core, AND IT STAYS THE ONLY ONE. This package
 must not depend on anything named .MusicGeneration, and it does NOT need
 CodeBrix.Audio.ModestSynth: the synthesized General MIDI library in that package
 and this recorded one are alternatives to each other, not layers. Adding a

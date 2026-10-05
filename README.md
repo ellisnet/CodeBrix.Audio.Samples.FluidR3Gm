@@ -19,7 +19,7 @@ Note that the NuGet package ID and the namespace are different - there is no pac
 
 XML documentation (IntelliSense) ships alongside the assembly.
 
-The package pulls in `CodeBrix.Audio.MitLicenseForever` automatically, and nothing else; no version pinning is needed in the consuming project.
+The package pulls in `CodeBrix.Audio.Core.MitLicenseForever` automatically, and nothing else; no version pinning is needed in the consuming project. For device playback, the application also references `CodeBrix.Audio.MitLicenseForever` on desktop or `CodeBrix.Audio.Android.ApacheLicenseForever` on Android. Offline synthesis and rendering need only Core.
 
 ## CodeBrix.Audio.Samples.FluidR3Gm supports:
 
@@ -41,6 +41,8 @@ An application that would rather keep its assets in one shared place sets `CodeB
 ```csharp
 FluidR3GmInstrumentLibrary.UseSoundFontAt("/opt/mygame/assets/FluidR3_GM.sf2");
 ```
+
+On Android, a file copied to the build output is not automatically included in the APK. Package the SoundFont and its licence notices as Android assets, extract them into app-private storage, and call `UseSoundFontAt` before the first sound.
 
 ## Sample Code
 
